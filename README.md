@@ -1,7 +1,7 @@
 # Browse-CopilotChats
 
 <!-- BADGES:START -->
-[![License](https://img.shields.io/github/license/5a9awneh/Browse-CopilotChats)](LICENSE) [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue?logo=powershell)](https://learn.microsoft.com/en-us/powershell/) [![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?logo=windows)](https://www.microsoft.com/windows) [![Last Commit](https://img.shields.io/github/last-commit/5a9awneh/Browse-CopilotChats)](https://github.com/5a9awneh/Browse-CopilotChats/commits/main) [<img src="https://madebyhuman.iamjarl.com/badges/loop-white.svg" alt="Human in the Loop" height="20">](https://madebyhuman.iamjarl.com)
+[![License](https://img.shields.io/github/license/5a9awneh/Browse-CopilotChats)](LICENSE) [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue?logo=powershell)](https://learn.microsoft.com/en-us/powershell/) [![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?logo=windows)](https://www.microsoft.com/windows) [![Last Commit](https://img.shields.io/github/last-commit/5a9awneh/Browse-CopilotChats)](https://github.com/5a9awneh/Browse-CopilotChats/commits/main) [![Human in the Loop](https://img.shields.io/badge/human--in--the--loop-%E2%9C%93-brightgreen?style=flat)](https://github.com/5a9awneh/Browse-CopilotChats)
 <!-- BADGES:END -->
 
 Browse, search, export, and recover VS Code Copilot chat history — including sessions orphaned when a project folder was renamed or moved.
