@@ -1,0 +1,17 @@
+# Extracted chat sessions (Browse-CopilotChats)
+RecoveredChats/
+CopilotChats_*.md
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Editor
+.vscode/
+
+# Temp / build
+*.tmp
+*.bak
+*.log
+*.json
