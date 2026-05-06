@@ -8,6 +8,58 @@ Browse, search, export, and recover VS Code Copilot chat history — including s
 
 ---
 
+**On launch, the script scans all workspaces and displays an interactive menu:**
+
+```
+  Scanning VS Code workspace storage...
+  Found 96 chat sessions across 28 workspaces.
+
+  +==============================================================+
+  |          VS Code Copilot Chat Browser                       |
+  +==============================================================+
+
+  [1] ! (unknown)  (10 chats, 4821KB)
+  [2]   Helpdesk-AI-Assistant  (11 chats, 12380KB)
+  [3]   it-eval-kit  (5 chats, 1203KB)
+  [4] ! Fix-BitLockerRDV  (3 chats, 1876KB)
+  [5]   WinRE-Fix-Package  (9 chats, 894KB)
+  [6]   Enable-WindowsHello  (2 chats, 4KB)
+  [7] ! Enable-WindowsHello  (10 chats, 11247KB)
+  [8]   Fix-WindowsFonts  (1 chats, 1KB)
+  [9] ! (unknown)  (6 chats, 987KB)
+  [10]   printer-address-book-converter  (2 chats, 9341KB)
+
+  ... and 18 more workspaces
+
+  [A] All chats (flat list sorted by date)
+  [E] Export all to Markdown
+  [Q] Quit
+
+  Select:
+```
+*(sanitized — `!` marks orphaned workspaces whose folders no longer exist on disk)*
+
+```mermaid
+flowchart TD
+    A([Run script]) --> B{Mode}
+    B -- "-Export flag" --> EXP[Export all sessions to .md file]
+    B -- Interactive --> WS["Workspace list  ·  ! = orphaned folder"]
+    WS -- select workspace --> SL[Session list]
+    WS -- "A — all sessions" --> SL
+    SL --> SD[Session detail]
+    SD --> SAVE[S — Save to .md]
+    SD --> COPY[C — Copy to clipboard]
+    SD --> EXT[X — Extract all sessions]
+    SD --> MIG["M — Migrate history  (orphaned only)"]
+
+    classDef success fill:#2d6a2d,color:#fff,stroke:#1a3d1a
+    classDef warning fill:#7a5500,color:#fff,stroke:#4d3600
+    class EXP,SAVE,COPY,EXT success
+    class MIG warning
+```
+
+---
+
 ## ✨ Features
 
 - **Interactive browser** — lists every Copilot chat session across all workspaces, rendered inline with syntax-highlighted code blocks
