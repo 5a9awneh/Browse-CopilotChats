@@ -77,6 +77,16 @@ flowchart TD
 - PowerShell 5.1 or later (built-in)
 - VS Code with the GitHub Copilot Chat extension
 
+### OneDrive Desktop folders
+
+If Windows redirects the Desktop folder to OneDrive, the scripts resolve the
+actual Windows Desktop location automatically. For example, this may be
+`C:\Users\info\OneDrive\Bureaublad` on a Dutch Windows installation. No custom
+path configuration is needed for `-Export`, `S` (Save), or `X` (Extract).
+
+The migration script also keeps its output and launch commands compatible with
+the Windows PowerShell 5.1 engine used by `Browse-CopilotChats.bat`.
+
 ---
 
 ## 🚀 Usage
@@ -132,7 +142,7 @@ If VS Code hasn't been opened with the new folder yet, the script opens it autom
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `-Export` | Switch | Non-interactive mode — exports all sessions to a single Markdown file |
-| `-ExportPath` | String | Custom output path. Defaults to `~\Desktop\CopilotChats_<date>.md` |
+| `-ExportPath` | String | Custom output path. Defaults to the Windows Desktop folder, including a OneDrive Desktop |
 
 ### `Migrate-WorkspaceChats.ps1`
 
@@ -142,7 +152,7 @@ If VS Code hasn't been opened with the new folder yet, the script opens it autom
 | `-OldHash` | String | Workspace storage hash (32-char hex). Shown in Browse-CopilotChats when viewing orphaned workspaces |
 | `-NewFolder` | String | Destination folder to migrate chat history into. Required unless `-ExtractOnly` |
 | `-ExtractOnly` | Switch | Export sessions as Markdown files without touching workspace storage |
-| `-ExtractPath` | String | Destination for extracted files. Defaults to `<NewFolder>\RecoveredChats\` or `Desktop\RecoveredChats_<date>\` |
+| `-ExtractPath` | String | Destination for extracted files. Defaults to `<NewFolder>\RecoveredChats\` or the Windows Desktop folder |
 | `-CloseAfterInit` | Switch | Close the VS Code window opened for hash initialisation |
 
 ---
