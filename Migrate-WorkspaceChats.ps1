@@ -35,7 +35,8 @@
 
 .PARAMETER ExtractPath
     Destination folder for extracted Markdown files.
-    Defaults to <NewFolder>\RecoveredChats\, or Desktop\RecoveredChats_<date>\
+    Defaults to <NewFolder>\RecoveredChats\, or the Windows Desktop folder
+    (including a OneDrive Desktop) as RecoveredChats_<date>\
     when -NewFolder is not provided.
 
 .PARAMETER CloseAfterInit
@@ -261,14 +262,15 @@ function Open-VSCodeAndWaitForHash {
     $codeCmd = Get-Command 'code' -ErrorAction SilentlyContinue
     if (-not $codeCmd) {
         Write-Host "  'code' is not in PATH. Open VS Code manually with:" -ForegroundColor DarkYellow
-        Write-Host "    code `"$FolderPath`"" -ForegroundColor White
+        Write-Host ('    code "{0}"' -f $FolderPath) -ForegroundColor White
         Write-Host "  Wait for it to fully load, then re-run this script." -ForegroundColor DarkYellow
         return $null
     }
 
     Write-Host "  Opening VS Code to initialise workspace storage..." -ForegroundColor Cyan
     $beforeIds = @(Get-Process 'Code' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Id)
-    Start-Process $env:ComSpec -ArgumentList "/c `"`"$($codeCmd.Source)`" `"$FolderPath`"`"" -WindowStyle Hidden
+    $codeArguments = '"{0}"' -f $FolderPath
+    Start-Process -FilePath $codeCmd.Source -ArgumentList $codeArguments -WindowStyle Hidden
 
     Write-Host "  Polling for workspace hash (timeout: ${HashPollSecs}s)..." -ForegroundColor DarkGray
     $elapsed = 0
@@ -368,13 +370,13 @@ Write-Host "  Searching for new workspace hash..." -ForegroundColor DarkGray
 $resolvedNewHash = Find-HashByFolder $NewFolder
 
 if (-not $resolvedNewHash) {
-    Write-Host "  No workspace hash found for new folder — opening VS Code to initialise." -ForegroundColor DarkYellow
+    Write-Host '  No workspace hash found for new folder; opening VS Code to initialise.' -ForegroundColor DarkYellow
     Write-Host ''
     $resolvedNewHash = Open-VSCodeAndWaitForHash -FolderPath $NewFolder
     if (-not $resolvedNewHash) { exit 1 }
 }
 else {
-    Write-Host "  New hash: $resolvedNewHash" -ForegroundColor White
+    Write-Host ('  New hash: {0}' -f $resolvedNewHash) -ForegroundColor White
 }
 
 $newHashDir = Join-Path $StorageRoot $resolvedNewHash
@@ -382,9 +384,9 @@ $newHashDir = Join-Path $StorageRoot $resolvedNewHash
 # ── Confirm and migrate ──────────────────────────────────────────────────────
 Write-Host ''
 Write-Host '  Ready to migrate:' -ForegroundColor Cyan
-Write-Host "    From : $resolvedOldHash" -ForegroundColor DarkGray
-Write-Host "    To   : $resolvedNewHash" -ForegroundColor DarkGray
-Write-Host "    Chats: $($chatFiles.Count)" -ForegroundColor DarkGray
+Write-Host ('    From : {0}' -f $resolvedOldHash) -ForegroundColor DarkGray
+Write-Host ('    To   : {0}' -f $resolvedNewHash) -ForegroundColor DarkGray
+Write-Host ('    Chats: {0}' -f $chatFiles.Count) -ForegroundColor DarkGray
 Write-Host ''
 $confirm = Read-Host '  Proceed? [Y/N]'
 if ($confirm -notmatch '^[Yy]') { Write-Host '  Aborted.' -ForegroundColor DarkYellow; exit 0 }
@@ -394,6 +396,6 @@ Invoke-Migrate -OldHashDir $oldHashDir -NewHashDir $newHashDir
 
 Write-Host ''
 Write-Host '  Migration complete.' -ForegroundColor Green
-Write-Host "  Open VS Code with: $NewFolder" -ForegroundColor White
+Write-Host ('  Open VS Code with: {0}' -f $NewFolder) -ForegroundColor White
 Write-Host '  Chat history should appear in the Copilot panel.' -ForegroundColor DarkGray
 Write-Host ''
