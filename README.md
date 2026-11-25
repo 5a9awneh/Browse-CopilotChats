@@ -152,7 +152,7 @@ If VS Code hasn't been opened with the new folder yet, the script opens it autom
 | `-OldHash` | String | Workspace storage hash (32-char hex). Shown in Browse-CopilotChats when viewing orphaned workspaces |
 | `-NewFolder` | String | Destination folder to migrate chat history into. Required unless `-ExtractOnly` |
 | `-ExtractOnly` | Switch | Export sessions as Markdown files without touching workspace storage |
-| `-ExtractPath` | String | Destination for extracted files. Defaults to `<NewFolder>\RecoveredChats\` or the Windows Desktop folder |
+| `-ExtractPath` | String | Destination for extracted files. Defaults to `<NewFolder>\RecoveredChats\` or `RecoveredChats_<date>\` in the Windows Desktop folder, including a OneDrive Desktop |
 | `-CloseAfterInit` | Switch | Close the VS Code window opened for hash initialisation |
 
 ---
