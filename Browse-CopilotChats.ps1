@@ -12,7 +12,8 @@
     Export all chats to a single Markdown file instead of interactive mode.
 
 .PARAMETER ExportPath
-    Path for the export file. Defaults to ~\Desktop\CopilotChats_<date>.md
+    Path for the export file. Defaults to the Windows Desktop folder
+    (including a OneDrive Desktop) as CopilotChats_<date>.md
 
 .EXAMPLE
     .\Browse-CopilotChats.ps1
